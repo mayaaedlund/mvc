@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/glider.svg') }}">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        <header class="site-header">
+            <span class="site-title">My MVC site</span>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="{{ path('home') }}">Home</a></li>
+                <li><a href="{{ path('about') }}">About</a></li>
+                <li><a href="{{ path('report') }}">Report</a></li>
+                <li><a href="{{ path('lucky') }}">Lucky</a></li>
+            </ul>
+        </nav>
+        <main>
+        {% block body %}{% endblock %}
+        </main>
+        <footer>
+        <div class="footer-content">
+        <p>&copy; 2024 Maya Edlund. </p>
+        <div class="social-media-links">
+            <a href="https://github.com/mayaaedlund/mvc" class="social-link">Github</a>
+            <a href="https://instagram.com/mayaedlund" class="social-link">Instagram</a>
+        </div>
+        <p>Contact: maya.edlund@hotmail.com</p>
+    </div>
+
+        </footer>
+
+    </body>
+</html>

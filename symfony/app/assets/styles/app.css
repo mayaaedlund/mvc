@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+body {
+    background-color: #253746;
+    background-size: cover;
+    color: #253746;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 80vh;
+    background-color: #d6e0e5;
+}
+
+.content {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.site-header {
+    text-align: center; /* Centrera texten */
+    margin: 0; /* Ta bort eventuell marginal */
+    padding: 0; /* Ta bort eventuell padding */
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #d6e0e5;
+    color: #253746;
+}
+
+.site-title {
+    font-size: 36px; /* Ange önskad storlek på texten */
+}
+
+
+h1 {
+    border-bottom: 4px double #ccc;
+    color: #253746;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+/* Navbar */
+nav {
+    display: flex; /* Använd flexbox */
+    justify-content: center; /* Centrera navbaren horisontellt */
+    background-color: #253746;
+    padding: 10px; /* Lägg till lite padding runt navigationsmenyn för utrymme */
+}
+
+nav ul {
+    list-style-type: none; /* Ta bort punktlistan */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Använd flexbox för att centrera länkarna vertikalt */
+}
+
+nav ul li {
+    margin-right: 20px; /* Lägg till lite mellanrum mellan listelementen */
+}
+
+nav ul li:last-child {
+    margin-right: 0; /* Ta bort högermarginalen från det sista listelementet */
+}
+
+nav ul li a {
+    text-decoration: none; /* Ta bort understrykning från länkarna */
+    color: white; /* Färg på länkarna */
+    font-weight: bold; /* Fet text */
+}
+
+nav ul li a:hover {
+    color: lightgray; /* Färg på länkarna när de är överhoppade */
+}
+
+/* Images */
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Centrera innehållet horisontellt */
+}
+
+.image-size {
+    width: 200px; /* Ange den önskade bredden */
+    height: auto; /* Sätt höjden automatiskt för att bevara bildens proportioner */
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.image-gallery img {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.1);
+}
+
+
+footer {
+    margin-top: auto;
+    background-color: #253746;/* Bakgrundsfärg för footern */
+    color: white; /* Textfärg för footern */
+    padding: 20px 0; /* Lägg till padding över och under footern */
+    text-align: center; /* Centrera texten i footern */
+}
+
+.footer-content {
+    max-width: 1200px; /* Maxbredd för footern innehåll */
+    margin: 0 auto; /* Centrera footern innehåll horisontellt */
+}
+
+.footer-links {
+    list-style-type: none; /* Ta bort punktlistan från ul */
+    padding: 0; /* Ta bort padding från ul */
+}
+
+.footer-links li {
+    display: inline; /* Visa listelementen i en rad */
+    margin-right: 20px; /* Lägg till lite mellanrum mellan listelementen */
+}
+
+.footer-links li:last-child {
+    margin-right: 0; /* Ta bort högermarginalen från det sista listelementet */
+}
+
+.footer-links a {
+    color: white; /* Färg på länkarna */
+    text-decoration: none; /* Ta bort understrykning från länkarna */
+}
+
+.footer-links a:hover {
+    color: lightgray; /* Färg på länkarna när de är överhoppade */
+}
+
+.social-media-links {
+    margin-top: 20px; /* Lägg till lite mellanrum mellan länkarna och kontakten */
+}
+
+.social-link {
+    display: inline-block; /* Lägg till inline-block för att ge länkarna en horisontell layout */
+    margin-right: 10px; /* Lägg till lite mellanrum mellan länkarna */
+    color: white; /* Färg på länkarna */
+    text-decoration: none; /* Ta bort understrykning från länkarna */
+}
+
+.social-link:hover {
+    color: lightgray; /* Färg på länkarna när de är överhoppade */
+}
+
+
+/* KNAPPAR */
+.link-button {
+    display: inline-block;
+    padding: 20px 80px;
+    background-color: #253746;
+    color: #d6e0e5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.link-button:hover {
+    background-color: #555; /* Bakgrundsfärg för knapparna vid hover */
+}
+
+
+.container {
+    display: flex; /* Använd flexbox */
+    justify-content: space-between; /* Fördela utrymmet mellan kolumnerna */
+    margin: 20px; /* Lägg till marginal runt containern */
+}
+
+.column {
+    width: 45%; /* Bredden på varje kolumn */
+}

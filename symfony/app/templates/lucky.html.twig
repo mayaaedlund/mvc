@@ -1,0 +1,22 @@
+{# templates/lucky_number.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Lucky You{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Lucky</h1>
+    <p>Välkommen till min magiska tur-sida! </p>
+    <p>Ditt magiska nummer är: {{ number }}</p>
+
+    <p>Just nu är klockan: {{ current_time }}</p>
+
+    <h2>Images</h2>
+    <div class="image-gallery">
+        <img src="{{ asset('img/summer.jpg') }}" alt="Image 1">
+        <img src="{{ asset('img/summer2.jpg') }}" alt="Image 2">
+        <img src="{{ asset('img/summer3.jpg') }}" alt="Image 3">
+    </div>
+</div>
+{% endblock %}
