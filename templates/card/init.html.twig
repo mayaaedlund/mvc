@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Draw Cards{% endblock %}
+
+{% block body %}
+
+<h1>Draw Cards [START]</h1>
+
+<p> Dra ett kort åt gången: <p> 
+
+<form method="post" action="">
+    <input type="submit" name="draw_one" value="Start">
+</form>
+
+<p> Dra flera kort, första gången dras 2 automatiskt. </p>
+
+<form method="post" action="{{ path('draw_multiple', {'num': 2}) }}">
+    <input type="submit" name="draw_cards" value="Start">
+</form>
+
+
+{% endblock %}

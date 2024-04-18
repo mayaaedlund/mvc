@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Game{% endblock %}
+
+{% block body %}
+<h1>Card game</h1>
+
+<p>Welcome to this cardgame. What do you want to do?.</p>
+
+<!-- Knapp för att länka till card/deck -->
+<a href="{{ path('deck') }}" class="btn btn-primary">View Deck</a>
+
+<!-- Knapp för att länka till card/deck/shuffle -->
+<a href="{{ path('shuffle_deck') }}" class="btn btn-primary">Shuffle Deck</a>
+
+<!-- Knapp för att länka till card/draw -->
+<a href="{{ path('draw_card') }}" class="btn btn-primary">Draw random Card</a>
+
+<!-- Knapp för att länka till card/init -->
+<a href="{{ path('card_init_get') }}" class="btn btn-primary">Draw cards to your deck.</a>
+
+
+{% endblock %}

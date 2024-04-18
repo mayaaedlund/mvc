@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Draw Multiple Cards{% endblock %}
+
+{% block body %}
+
+<h1>Your cards:</h1>
+
+<div>
+    {% if drawnCards %}
+        {% for cardString in cardStrings %}
+            <span class="card">{{ cardString }}</span>
+        {% endfor %}
+    {% else %}
+        <p>No cards available.</p>
+    {% endif %}
+</div>
+
+{{ include('flash.html.twig') }}
+
+<p>There are {{ cardsLeft }} cards left in the deck.</p>
+
+<form method="post" action="{{ path('reset_session') }}">
+    <button type="submit">Reset</button>
+</form>
+
+{% endblock %}

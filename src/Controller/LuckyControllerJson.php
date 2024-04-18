@@ -45,7 +45,7 @@ class LuckyControllerJson
         $data = [
             'quote' => $quote,
             'date' => date('Y-m-d'),
-            'formatted_timestamp' => $formattedTimestamp 
+            'formatted_timestamp' => $formattedTimestamp
         ];
 
         $response = new JsonResponse($data);

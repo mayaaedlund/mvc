@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Session{% endblock %}
+
+{% block body %}
+
+<h1>Session</h1>
+
+<p>The session contains:</p>
+
+    {{ dump(session) }}
+
+<form method="post" action="{{ path('reset_session') }}">
+    <button type="submit">Reset Session</button>
+</form>
+
+{% endblock %}

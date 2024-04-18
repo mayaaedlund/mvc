@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Game{% endblock %}
+
+{% block body %}
+
+<h1>Card Game [PLAYING]</h1>
+
+<p>Your cards:</p>
+
+
+<div>
+    {% if drawnCards is defined and drawnCards %}
+        {% for cardString in cardStrings %}
+            <span class="card">{{ cardString }}</span>
+        {% endfor %}
+    {% else %}
+        <p>No cards available.</p>
+    {% endif %}
+</div>
+
+
+
+
+<p>There are {{ cardsLeft }} cards left in the deck.</p>
+
+{{ include('flash.html.twig') }}
+
+<form method="post" action="{{ path('add_card') }}">
+    <p>
+        <input type="submit" name="addCard" value="Draw Card">
+    </p>
+</form>
+
+
+{% endblock %}
