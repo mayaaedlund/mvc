@@ -33,5 +33,5 @@ class Card
         return $numbers;
     }
 
-    
+
 }

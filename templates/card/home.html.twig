@@ -19,5 +19,15 @@
 <!-- Knapp för att länka till card/init -->
 <a href="{{ path('card_init_get') }}" class="btn btn-primary">Draw cards to your deck.</a>
 
+<p> Detta kort-spel är uppbyggt på flera klasser.
+Card-klassen är den grundläggande klassen som representerar ett enskilt kort. 
+Klassen lagrar värdet på kortet och metoder för att få slumpmässigt kort.
+CardGraphic ärver från Card-klassen och ger funktionaliteten att ge korten
+en symbol. CardHand-klassen representerar en hand av kort. Alla dessa klasser
+är inspirerade av övningen i detta kmom02. </p>
+
+<div class="image-container">
+        <img src="{{ asset('img/uml.png') }}" alt="" class="image-size">
+    </div>
 
 {% endblock %}

@@ -64,7 +64,7 @@ class CardGameController extends AbstractController
     {
         $card = new CardGraphic();
 
-        // 
+        //
         $numbers = $card->getAllCards();
 
         // Skicka korten till mallen
@@ -82,7 +82,7 @@ class CardGameController extends AbstractController
     {
         $card = new CardGraphic();
 
-        // 
+        //
         $numbers = $card->shuffledCards();
 
         // Skicka korten till mallen
@@ -209,14 +209,14 @@ class CardGameController extends AbstractController
         // Dra det angivna antalet kort från kortleken och lägg till dem i den dragna kort-arrayen
         for ($i = 0; $i < $num; $i++) {
             if (empty($deck)) {
-                break; 
+                break;
             }
 
             $randomKey = array_rand($deck);
             $drawnCard = $deck[$randomKey];
             unset($deck[$randomKey]);
             $drawnCards[] = $drawnCard;
-            
+
         }
 
         // Uppdatera sessionen med den nya kortleken och den dragna kort-arrayen
@@ -270,28 +270,28 @@ class CardGameController extends AbstractController
         return $this->render('card/one_card.html.twig', $data);
     }
 */
-    
 
-    /* Kod som funkar =
-    #[Route("/card/draw/add", name: "add_card", methods: ['POST'])]
-    public function addCard(SessionInterface $session): Response
-    {
-        // Skapa en instans av CardGraphic
-        $card = new CardGraphic();
-        
-        $drawnCards = $session->get("drawnCards", []);
 
-        // Hämta och uppdatera data från sessionen
-        $cardsLeft = $session->get("cardsLeft");
-        $drawnCards = $session->get("drawnCards");
+/* Kod som funkar =
+#[Route("/card/draw/add", name: "add_card", methods: ['POST'])]
+public function addCard(SessionInterface $session): Response
+{
+    // Skapa en instans av CardGraphic
+    $card = new CardGraphic();
 
-        // Implementera logik för att lägga till kort här
+    $drawnCards = $session->get("drawnCards", []);
 
-        // Omdirigera tillbaka till draw-sidan
-        return $this->redirectToRoute('card_draw');
-    }
+    // Hämta och uppdatera data från sessionen
+    $cardsLeft = $session->get("cardsLeft");
+    $drawnCards = $session->get("drawnCards");
 
-    */
+    // Implementera logik för att lägga till kort här
+
+    // Omdirigera tillbaka till draw-sidan
+    return $this->redirectToRoute('card_draw');
+}
+
+*/
 
 
 /*
