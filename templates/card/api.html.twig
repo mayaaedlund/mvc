@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Api-sidan{% endblock %}
+
+{% block body %}
+<h1>Api-sidan</h1>
+
+<p>Välkommen till api-sidan. Här kan du välja bland dessa alternativ:</p>
+
+<a href="{{ path('api_deck') }}" class="btn btn-primary">View Deck</a>
+
+<!-- Knapp för att länka till card/deck/shuffle -->
+<a href="{{ path('api_shuffle') }}" class="btn btn-primary">Shuffle Deck</a>
+
+<!-- Knapp för att länka till card/draw -->
+<a href="{{ path('api_draw') }}" class="btn btn-primary">Draw random Card</a>
+
+<a href="{{ path('draw_number', {'number': 2}) }}" class="btn btn-primary">Draw more cards (2)</a>
+
+
+
+{% endblock %}

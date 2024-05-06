@@ -16,13 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CardGameController extends AbstractController
 {
-    private $cardHand;
-
-    public function __construct(CardHand $cardHand)
-    {
-        $this->cardHand = $cardHand;
-    }
-
     #[Route("/card", name: "card")]
     public function home(): Response
     {
@@ -127,11 +120,6 @@ class CardGameController extends AbstractController
             $session->set('deck', $deck);
         }
 
-        $hand = new CardHand();
-
-        // Sparar den tomma handen i sessionen
-        $session->set('hand', $hand);
-
         return $this->redirectToRoute('card_draw');
     }
 
@@ -139,33 +127,15 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/draw", name: "card_draw", methods: ['GET'])]
     public function start(SessionInterface $session): Response
     {
-        // Hämta handen från sessionen
-        $hand = $session->get('hand');
-
-        // Om handen inte finns i sessionen, skapa en ny tom hand
-        if (!$hand instanceof CardHand) {
-            $hand = new CardHand();
-            $session->set('hand', $hand);
-        }
-
-        // Hämta kortleken från sessionen
-        $deck = $session->get('deck', []);
-
-        // Om det inte finns någon kortlek i sessionen, skapa en och blanda den
-        if (empty($deck)) {
-            $cardGraphic = new CardGraphic();
-            $deck = $cardGraphic->getAllNumbers();
-            shuffle($deck);
+        if (!$session->has('deck')) {
+            $deck = $cardGraphic->getAllNumbers(); // Hämta alla kortnummer
             $session->set('deck', $deck);
         }
 
-        // Dra ett kort från kortleken till handen om handen är tom
-        if ($hand->getNumberDices() === 0) {
-            $drawnCard = array_pop($deck);
-            $hand->add(new CardGraphic($drawnCard));
-        }
+        $deck = $session->get('deck', []);
 
         $drawnCards = $session->get('drawn_cards', []); // Hämta alla tidigare dragna kort
+
         $cardsLeft = count($deck);
 
         // Skapa en tom array för att lagra symboler för alla dragna kort
@@ -186,7 +156,6 @@ class CardGameController extends AbstractController
 
         return $this->render('card/play.html.twig', $data);
     }
-
 
     #[Route("/card/draw/add", name: "add_card", methods: ['POST'])]
     public function addCard(SessionInterface $session): Response

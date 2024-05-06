@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LuckyControllerTwig extends AbstractController
 {
-    #[Route("/lucky/twig", name: "lucky")]
+    #[Route("/lucky", name: "lucky")]
     public function number(): Response
     {
         $number = random_int(0, 100);

@@ -88,7 +88,7 @@ class LuckyControllerJson
         return $response;
     }
 
-    #[Route("/api/deck")]
+    #[Route("/api/deck", name: "api_deck")]
     public function deck(): Response
     {
         // Skapa en instans av CardGraphic för att hämta kortdata
@@ -103,7 +103,7 @@ class LuckyControllerJson
         return $response;
     }
 
-    #[Route("/api/deck/shuffle")]
+    #[Route("/api/deck/shuffle", name: "api_shuffle")]
     public function shuffle_deck(): Response
     {
         // Starta eller återuppta sessionen
@@ -124,7 +124,7 @@ class LuckyControllerJson
         return $response;
     }
 
-    #[Route("/api/deck/draw")]
+    #[Route("/api/deck/draw", name: "api_draw")]
     public function drawCard(Request $request): Response
     {
         // Starta eller återuppta sessionen
@@ -155,7 +155,7 @@ class LuckyControllerJson
     }
 
 
-    #[Route("/api/deck/draw/{number}", methods: ['POST', 'GET'])]
+    #[Route("/api/deck/draw/{number}", name: "draw_number", methods: ['POST', 'GET'])]
     public function drawCards(Request $request, int $number): Response
     {
         // Starta eller återuppta sessionen
