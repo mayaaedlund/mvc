@@ -7,9 +7,11 @@ use App\Card\CardGraphic;
 use App\Card\CardHand;
 use App\Card\SortedCards;
 use App\Card\CardPoints; 
+use App\Card\CardPlay;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -294,28 +296,18 @@ class CardGameController extends AbstractController
     #[Route("/game/start", name: "gamestart", methods: ['GET'])]
     public function gamestart(SessionInterface $session, CardPoints $cardPoints): Response
     {
-        // Hämta handen från sessionen
-        $hand = $session->get('hand');
 
-        // Om handen inte finns i sessionen, skapa en ny tom hand
-        if (!$hand instanceof CardHand) {
-            $hand = new CardHand();
-            $session->set('hand', $hand);
-        }
+        $game = new CardPlay();
+        //
+        $playerHand = $game->getPlayerHand();
+        $dealerHand = $game->getDealerHand();
 
-        //bankens hand
-        $bankhand = $session->get('bankhand');
-
-        // Om handen inte finns i sessionen, skapa en ny tom hand
-        if (!$bankhand instanceof CardHand) {
-            $bankhand = new CardHand();
-            $session->set('bankhand', $bankhand);
-        }
+        $session->set('playerHand', $playerHand);
+        $session->set('dealerHand', $dealerHand);
 
 
         // Hämta kortleken från sessionen
         $deck = $session->get('deck', []);
-
         $cardGraphic = new CardGraphic();
 
         // Om det inte finns någon kortlek i sessionen, skapa en och blanda den
@@ -326,180 +318,126 @@ class CardGameController extends AbstractController
             $session->set('deck', $deck);
         }
 
-        $points = $session->get('points');
+        $points = $session->get('points', 0);
+        $dealerpoints = $session->get('dealerpoints', 0);
 
-        if ($points === null) {
-            // Om 'points' inte finns i sessionen, skapa den och sätt till 0
-            $session->set('points', 0);
-            $points = 0; // Sätt även $points till 0
-        }
-
-        //bankens poäng:
-
-        $bankpoints = $session->get('bankpoints');
-
-        if ($bankpoints === null) {
-            // Om 'points' inte finns i sessionen, skapa den och sätt till 0
-            $session->set('bankpoints', 0);
-            $bankpoints = 0; // Sätt även $points till 0
-        }
 
         //hämta alla kort banken dragit
-        $bankCards = $session->get('bank_cards', []);
+        $dealerCards = $session->get('dealer_cards', []);
 
-        $cardSymbol = [];
-
+        $cardSymbols = [];
         // Loopa igenom alla tidigare dragna kort och hämta deras symboler
-        foreach ($bankCards as $bankCard) {
-            $cardSymbol[] = $cardGraphic->getGraphic($bankCard);
+        foreach ($dealerCards as $dealerCard) {
+            $cardSymbols[] = $cardGraphic->getGraphic($dealerCard);
         }
-        /*
-        // Dra ett kort från kortleken till handen om handen är tom
-        if ($hand->getNumberDices() === 0) {
-            $drawnCard = array_pop($deck);
-            $hand->add(new CardGraphic($drawnCard));
-            $points = $cardPoints->getPoints($drawnCard);
-
-            // Spara poängen i sessionen
-            $session->set('points', $points);
-        } else {
-            // Hämta poängen från sessionen
-            $points = $session->get('points', 0);
-        }
-        */
 
         // Hämta alla tidigare dragna kort från sessionen
         $drawnCards = $session->get('drawn_cards', []);
 
-        // Räkna antalet kort kvar i kortleken
-        $cardsLeft = count($deck);
 
-        // Skapa en tom array för att lagra symboler för alla dragna kort
+        // Skapa en tom array för att lagra symboler för alla dragna kort för player
         $cardStrings = [];
-
         // Loopa igenom alla tidigare dragna kort och hämta deras symboler
         foreach ($drawnCards as $drawnCard) {
             $cardStrings[] = $cardGraphic->getGraphic($drawnCard);
         }
 
+        $playerStopped = $session->get('playerStopped', false);
+        $gameOn = $session->get('gameOn', true);
+
         // Skicka alla relevanta data till vyn för rendering
         $data = [
             "deck" => $deck,
-            "bankCards" => $bankCards,
-            "bankpoints" => $bankpoints,
+            "dealerCards" => $dealerCards,
+            "dealerpoints" => $dealerpoints,
             "drawnCards" => $drawnCards, // Skicka med alla tidigare dragna kort
-            "bankCards" => $bankCards,
-            "cardSymbol" => $cardSymbol,
-            "cardsLeft" => $cardsLeft,
+            "cardSymbols" => $cardSymbols,
             "cardStrings" => $cardStrings, // Skicka med symboler för alla tidigare dragna kort
             "points" => $points, // Skicka med poängen
+            "playerStopped" => $playerStopped,
+            "gameOn" => $gameOn
         ];
 
         return $this->render('card/gameplan.html.twig', $data);
     }
 
 
-
-
-    #[Route("/game/start", name: "play_card", methods: ['POST'])]
-    public function playCard(SessionInterface $session, CardPoints $cardPoints): Response
+    #[Route("/game/player", name: "play_card", methods: ['POST', 'GET'])]
+    public function playCard(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Hämta kortleken från sessionen
-        $deck = $session->get('deck', []);
-
-        /*// Kontrollera om det finns tillräckligt med kort i leken
-        if (count($deck) < 1) {
-            $this->addFlash(
-                'warning',
-                'Not enough cards in deck'
-            );
-            return $this->redirectToRoute('gamestart');
-        }
-*/
-        $hand = $session->get('hand');
-
-        // Dra ett kort från kortleken
-        $drawnCard = array_pop($deck);
-
-        // Lägg till det dragna kortet i användarens hand
-        // Jag antar att du har en hand-variabel instansierad någonstans
-        // som du kan använda för att lägga till kortet, här kallas den $hand
-        $hand->add(new CardGraphic($drawnCard));
-
-        // Hämta antalet poäng för det dragna kortet
-        $pointsForDrawnCard = $cardPoints->getPoints($drawnCard);
-
-        // Spara det dragna kortet i sessionen
-        $drawnCards = $session->get('drawn_cards', []);
-        $drawnCards[] = $drawnCard;
-        $session->set('drawn_cards', $drawnCards);
-
-        // Hämta befintliga poäng eller sätt till 0 om inga poäng finns
-        $points = $session->get('points', 0);
-
-        // Lägg till poängen för det dragna kortet till de befintliga poängen
-        $points += $pointsForDrawnCard;
-
-        if ($points > 21) {
-            $this->addFlash(
-                'DU FÖRLORADE',
-                'BANKEN VINNER!',
-            );
-        }
-
-        // Spara de uppdaterade poängen i sessionen
-        $session->set('points', $points);
-
-        // Uppdatera kortleken i sessionen efter att ett kort har dragits
-        $session->set('deck', $deck);
-
-        // Omdirigera användaren tillbaka till spelet (eller vart du vill skicka dem)
+        // Anropa metoden för att dra ett kort för spelaren
+        $cardPlay->drawCardForPlayer($session, $cardPoints);
+    
+        // Omdirigera användaren tillbaka till spelet
         return $this->redirectToRoute('gamestart');
     }
 
-    #[Route("/game/start", name: "dealer_card", methods: ['POST'])]
-    public function dealerCard(SessionInterface $session, CardPoints $cardPoints): Response
+    #[Route("/game/dealer", name: "dealer_card", methods: ['POST', 'GET'])]
+    public function dealerCard(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Hämta kortleken från sessionen
-        $deck = $session->get('deck', []);
+        // Anropa metoden för att låta dealern dra ett kort
+        $cardPlay->drawCardForDealer($session, $cardPoints);
 
-        // Hämta bankens hand från sessionen
-        $bankhand = $session->get('bankhand', []);
 
-        // Dra ett kort från kortleken
-        $bankCard = array_pop($deck);
-
-        // Lägg till det dragna kortet i bankens hand
-        $bankhand[] = new CardGraphic($bankCard);
-
-        // Spara bankens hand i sessionen
-        $session->set('bankhand', $bankhand);
-
-        // Hämta antalet poäng för det dragna kortet
-        $pointsForDrawnCard = $cardPoints->getPoints($bankCard);
-
-        // Hämta befintliga poäng eller sätt till 0 om inga poäng finns
-        $bankpoints = $session->get('bankpoints', 0);
-
-        // Lägg till poängen för det dragna kortet till bankens befintliga poäng
-        $bankpoints += $pointsForDrawnCard;
-
-        // Om bankens poäng överstiger 21, visa ett meddelande om att banken har förlorat
-        if ($bankpoints > 21) {
-            $this->addFlash(
-                'warning',
-                'Banken fick över 21 poäng. Du vinner!'
-            );
+        $dealerPoints = $session->get('dealerpoints');
+        if ($dealerPoints > 16) {
+            // Om dealern har tillräckligt med poäng, stanna
+            $session->set('gameOn', false);
+            return $this->redirectToRoute('dealer_stay');
+        } else {
+            // Annars, fortsätt spelet
+            return $this->redirectToRoute('gamestart');
         }
+        
+    }
 
-        // Spara de uppdaterade poängen för banken i sessionen
-        $session->set('bankpoints', $bankpoints);
 
-        // Uppdatera kortleken i sessionen efter att ett kort har dragits
-        $session->set('deck', $deck);
+    #[Route("/game/dealer/stay", name: "dealer_stay", methods: ['POST', 'GET'])]
+    public function dealerStay(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
+    {
+        // Anropa metoden för att utvärdera vinnaren
+        $cardPlay->evaluateWinner($session, $cardPoints);
 
-        // Omdirigera användaren tillbaka till spelet
+        // Omdirigera tillbaka till spelet
         return $this->redirectToRoute('gamestart');
+    }
+
+    #[Route("/game/player/stay", name: "player_stay", methods: ['POST', 'GET'])]
+    public function playerStay(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
+    {
+        // Anropa metoden för att låta dealern fortsätta
+        $cardPlay->playerStay($session, $cardPoints);
+
+        // Omdirigera tillbaka till spelet
+        return $this->redirectToRoute('gamestart');
+    }
+
+
+    #[Route("/reset-game", name: "reset_game", methods: ['POST'])]
+    public function resetGame(SessionInterface $session): Response
+    {
+        // Rensa all sessionens data
+        $session->clear();
+
+        // Återvänd till en annan sida eller visa en bekräftelse
+        return $this->redirectToRoute('gamestart');
+    }
+
+    #[Route("/api/game", name: "api_game", methods: ['POST', 'GET'])]
+    public function apigame(SessionInterface $session): Response
+    {
+        $points = $session->get('points', 0);
+        $dealerpoints = $session->get('dealerpoints', 0);
+
+        // Skapa JSON-struktur med alla dragna kort och antalet kvarvarande kort i kortleken
+        $response = [
+            'points' => $points,
+            'dealerpoints' => $dealerpoints,
+
+        ];
+
+        // Returnera JSON-svar
+        return new JsonResponse($response);
     }
 
 

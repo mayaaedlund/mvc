@@ -240,10 +240,14 @@ ul.dicearea li {
 
 .flash-warning {
     padding: 0.5em;
-    color: #856404;
-    background-color: #fff3cd;
+    color: #0127e8;
+    background-color: #f9ea43;
     border-color: #ffeeba;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
 }
+
 .flash-warning:before {
     content: "⚠";
 }
@@ -262,4 +266,65 @@ ul.cardarea {
 
 ul.cardarea li {
     display: inline;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.name {
+    border-top: 20px;
+    color: #003c7c;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.gameplan {
+    background-color: rgb(170, 184, 170);
+}
+
+.center {
+    text-align: center;
+}
+
+/* Styla knapparna */
+form {
+    text-align: center; /* Centrera knapparna horisontellt */
+}
+
+input[type="submit"], button {
+    padding: 10px 20px; /* Justera padding för att ge knapparna lite utrymme */
+    background-color: #19381a; /* Bakgrundsfärg */
+    color: white; /* Textfärg */
+    border: none; /* Ingen kantlinje */
+    font-weight: bold;
+    border-radius: 5px; /* Runda hörn */
+    cursor: pointer; /* Visa pekaren som en hand när den är över knappen */
+    margin: 10px; /* Avstånd mellan knappar */
+}
+
+input[name="playerStay"], button[type="submit"] {
+    background-color: #f44336; /* Bakgrundsfärg för "STANNA" knappen */
+}
+input[type="submit"]:hover, button:hover {
+    background-color: #45a049; /* Ändra bakgrundsfärgen när användaren hovrar över knappen */
+}
+
+/* Styla överskrifterna */
+h2 {
+    text-align: center; /* Centrera överskrifterna horisontellt */
+}
+
+/* Styla kortcontainer */
+.card-container {
+    text-align: center; /* Centrera korten horisontellt */
+    margin-bottom: 20px; /* Avstånd mellan kortcontainer och knappar */
+}
+
+button[type="submit"] {
+    background-color: black; /* Bakgrundsfärg för "STARTA OM" knappen */
 }
