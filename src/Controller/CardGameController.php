@@ -211,7 +211,6 @@ class CardGameController extends AbstractController
 
         $session->set('deck', $deck);
 
-        // Hämta alla tidigare dragna kort och lägg till det nya dragna kortet i arrayen
         $drawnCards = $session->get('drawn_cards', []);
         $drawnCards[] = $drawnCard;
         $session->set('drawn_cards', $drawnCards);
@@ -223,9 +222,8 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/draw/{num<\d+>}", name: "draw_multiple")]
     public function draw_multiple(int $num, SessionInterface $session, CardGraphic $cardGraphic): Response
     {
-        // Skapa ett nytt deck och spara det i sessionen om det inte redan finns
         if (!$session->has('deck')) {
-            $deck = $cardGraphic->getAllNumbers(); // Hämta alla kortnummer
+            $deck = $cardGraphic->getAllNumbers();
             $session->set('deck', $deck);
         }
 
@@ -242,11 +240,8 @@ class CardGameController extends AbstractController
             throw new \Exception("Can not draw more than 52 cards!");
         }
 
-
-        // Hämta alla tidigare dragna kort eller skapa en ny array om det är första dragningen
         $drawnCards = $session->get('drawn_cards', []);
 
-        // Dra det angivna antalet kort från kortleken och lägg till dem i den dragna kort-arrayen
         for ($i = 0; $i < $num; $i++) {
             if (empty($deck)) {
                 break;
@@ -259,27 +254,23 @@ class CardGameController extends AbstractController
 
         }
 
-        // Uppdatera sessionen med den nya kortleken och den dragna kort-arrayen
         $session->set('deck', $deck);
         $session->set('drawn_cards', $drawnCards);
 
         // Räkna antalet kort kvar i kortleken
         $cardsLeft = count($deck);
 
-        // Skapa en tom array för att lagra symboler för alla dragna kort
         $cardStrings = [];
 
-        // Loopa igenom alla tidigare dragna kort och hämta deras symboler
         foreach ($drawnCards as $drawnCard) {
             $cardStrings[] = $cardGraphic->getGraphic($drawnCard);
         }
 
-        // Skicka med all information till mallen för att visas
         $data = [
             "deck" => $deck,
-            "drawnCards" => $drawnCards, // Skicka med alla tidigare dragna kort
+            "drawnCards" => $drawnCards,
             "cardsLeft" => $cardsLeft,
-            "cardStrings" => $cardStrings, // Skicka med symboler för alla tidigare dragna kort
+            "cardStrings" => $cardStrings,
         ];
 
         return $this->render('card/multiple.html.twig', $data);
@@ -306,11 +297,9 @@ class CardGameController extends AbstractController
         $session->set('dealerHand', $dealerHand);
 
 
-        // Hämta kortleken från sessionen
         $deck = $session->get('deck', []);
         $cardGraphic = new CardGraphic();
 
-        // Om det inte finns någon kortlek i sessionen, skapa en och blanda den
         if (empty($deck)) {
             $cardGraphic = new CardGraphic();
             $deck = $cardGraphic->getAllNumbers();
@@ -321,23 +310,16 @@ class CardGameController extends AbstractController
         $points = $session->get('points', 0);
         $dealerpoints = $session->get('dealerpoints', 0);
 
-
-        //hämta alla kort banken dragit
         $dealerCards = $session->get('dealer_cards', []);
 
         $cardSymbols = [];
-        // Loopa igenom alla tidigare dragna kort och hämta deras symboler
         foreach ($dealerCards as $dealerCard) {
             $cardSymbols[] = $cardGraphic->getGraphic($dealerCard);
         }
 
-        // Hämta alla tidigare dragna kort från sessionen
         $drawnCards = $session->get('drawn_cards', []);
 
-
-        // Skapa en tom array för att lagra symboler för alla dragna kort för player
         $cardStrings = [];
-        // Loopa igenom alla tidigare dragna kort och hämta deras symboler
         foreach ($drawnCards as $drawnCard) {
             $cardStrings[] = $cardGraphic->getGraphic($drawnCard);
         }
@@ -345,15 +327,14 @@ class CardGameController extends AbstractController
         $playerStopped = $session->get('playerStopped', false);
         $gameOn = $session->get('gameOn', true);
 
-        // Skicka alla relevanta data till vyn för rendering
         $data = [
             "deck" => $deck,
             "dealerCards" => $dealerCards,
             "dealerpoints" => $dealerpoints,
-            "drawnCards" => $drawnCards, // Skicka med alla tidigare dragna kort
+            "drawnCards" => $drawnCards,
             "cardSymbols" => $cardSymbols,
-            "cardStrings" => $cardStrings, // Skicka med symboler för alla tidigare dragna kort
-            "points" => $points, // Skicka med poängen
+            "cardStrings" => $cardStrings,
+            "points" => $points,
             "playerStopped" => $playerStopped,
             "gameOn" => $gameOn
         ];
@@ -365,27 +346,22 @@ class CardGameController extends AbstractController
     #[Route("/game/player", name: "play_card", methods: ['POST', 'GET'])]
     public function playCard(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Anropa metoden för att dra ett kort för spelaren
         $cardPlay->drawCardForPlayer($session, $cardPoints);
 
-        // Omdirigera användaren tillbaka till spelet
         return $this->redirectToRoute('gamestart');
     }
 
     #[Route("/game/dealer", name: "dealer_card", methods: ['POST', 'GET'])]
     public function dealerCard(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Anropa metoden för att låta dealern dra ett kort
         $cardPlay->drawCardForDealer($session, $cardPoints);
 
 
         $dealerPoints = $session->get('dealerpoints');
         if ($dealerPoints > 16) {
-            // Om dealern har tillräckligt med poäng, stanna
             $session->set('gameOn', false);
             return $this->redirectToRoute('dealer_stay');
         } else {
-            // Annars, fortsätt spelet
             return $this->redirectToRoute('gamestart');
         }
 
@@ -395,20 +371,16 @@ class CardGameController extends AbstractController
     #[Route("/game/dealer/stay", name: "dealer_stay", methods: ['POST', 'GET'])]
     public function dealerStay(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Anropa metoden för att utvärdera vinnaren
         $cardPlay->evaluateWinner($session, $cardPoints);
 
-        // Omdirigera tillbaka till spelet
         return $this->redirectToRoute('gamestart');
     }
 
     #[Route("/game/player/stay", name: "player_stay", methods: ['POST', 'GET'])]
     public function playerStay(SessionInterface $session, CardPoints $cardPoints, CardPlay $cardPlay): Response
     {
-        // Anropa metoden för att låta dealern fortsätta
         $cardPlay->playerStay($session, $cardPoints);
 
-        // Omdirigera tillbaka till spelet
         return $this->redirectToRoute('gamestart');
     }
 
@@ -416,10 +388,8 @@ class CardGameController extends AbstractController
     #[Route("/reset-game", name: "reset_game", methods: ['POST'])]
     public function resetGame(SessionInterface $session): Response
     {
-        // Rensa all sessionens data
         $session->clear();
 
-        // Återvänd till en annan sida eller visa en bekräftelse
         return $this->redirectToRoute('gamestart');
     }
 
@@ -429,14 +399,12 @@ class CardGameController extends AbstractController
         $points = $session->get('points', 0);
         $dealerpoints = $session->get('dealerpoints', 0);
 
-        // Skapa JSON-struktur med alla dragna kort och antalet kvarvarande kort i kortleken
         $response = [
             'points' => $points,
             'dealerpoints' => $dealerpoints,
 
         ];
 
-        // Returnera JSON-svar
         return new JsonResponse($response);
     }
 
