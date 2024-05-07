@@ -58,7 +58,7 @@ class CardPoints extends Card
         51 => 12,
         52 => 13,
     ];
-    
+
 
     public function getPoints(int $cardValue): int
     {

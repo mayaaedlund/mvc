@@ -6,7 +6,7 @@ use App\Card\Card;
 use App\Card\CardGraphic;
 use App\Card\CardHand;
 use App\Card\SortedCards;
-use App\Card\CardPoints; 
+use App\Card\CardPoints;
 use App\Card\CardPlay;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -286,7 +286,7 @@ class CardGameController extends AbstractController
     }
 
 
-    
+
     #[Route("/game", name: "game", methods: ['GET'])]
     public function game(): Response
     {
@@ -367,7 +367,7 @@ class CardGameController extends AbstractController
     {
         // Anropa metoden för att dra ett kort för spelaren
         $cardPlay->drawCardForPlayer($session, $cardPoints);
-    
+
         // Omdirigera användaren tillbaka till spelet
         return $this->redirectToRoute('gamestart');
     }
@@ -388,7 +388,7 @@ class CardGameController extends AbstractController
             // Annars, fortsätt spelet
             return $this->redirectToRoute('gamestart');
         }
-        
+
     }
 
 
@@ -444,4 +444,3 @@ class CardGameController extends AbstractController
 
 
 }
-

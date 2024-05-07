@@ -158,40 +158,40 @@ class CardPlay extends AbstractController
 
 
     ///
-/*
+    /*
 
 
-    
-    public function hitPlayer(): void
-    {
-        // Ge ett kort till spelaren
-        $this->playerHand->add($this->deck->drawCard());
-    }
 
-    public function hitDealer(): void
-    {
-        // Ge ett kort till dealern
-        $this->dealerHand->add($this->deck->drawCard());
-    }
-
-    public function calculateWinner(): string
-    {
-        // Implementera logik för att beräkna vinnaren
-        // Till exempel, jämför summan av spelarens hand med dealerns hand
-        $playerPoints = $this->playerHand->calculatePoints();
-        $dealerPoints = $this->dealerHand->calculatePoints();
-
-        if ($playerPoints > 21) {
-            return "Dealer wins, player busted.";
-        } elseif ($dealerPoints > 21) {
-            return "Player wins, dealer busted.";
-        } elseif ($playerPoints > $dealerPoints) {
-            return "Player wins.";
-        } elseif ($playerPoints < $dealerPoints) {
-            return "Dealer wins.";
-        } else {
-            return "It's a tie.";
+        public function hitPlayer(): void
+        {
+            // Ge ett kort till spelaren
+            $this->playerHand->add($this->deck->drawCard());
         }
-    }
-    */
+
+        public function hitDealer(): void
+        {
+            // Ge ett kort till dealern
+            $this->dealerHand->add($this->deck->drawCard());
+        }
+
+        public function calculateWinner(): string
+        {
+            // Implementera logik för att beräkna vinnaren
+            // Till exempel, jämför summan av spelarens hand med dealerns hand
+            $playerPoints = $this->playerHand->calculatePoints();
+            $dealerPoints = $this->dealerHand->calculatePoints();
+
+            if ($playerPoints > 21) {
+                return "Dealer wins, player busted.";
+            } elseif ($dealerPoints > 21) {
+                return "Player wins, dealer busted.";
+            } elseif ($playerPoints > $dealerPoints) {
+                return "Player wins.";
+            } elseif ($playerPoints < $dealerPoints) {
+                return "Dealer wins.";
+            } else {
+                return "It's a tie.";
+            }
+        }
+        */
 }
