@@ -51,4 +51,14 @@ class CardHand
         }
         return $values;
     }
+
+    public function calculatePoints(): int
+    {
+        $points = 0;
+        foreach ($this->hand as $card) {
+            // Hämta poängen för varje kort och lägg till det till poängen
+            $points += $card->getPoints();
+        }
+        return $points;
+    }
 }

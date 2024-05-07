@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block title %}21{% endblock %}
+
+{% block body %}
+
+<h1>21 [PLAYING]</h1>
+
+{{ include('flash.html.twig') }}
+
+<p>BANKENS KORT </p>
+
+<div>
+    {% if bankhand is defined and bankhand %}
+        {% for bankCard in bankhand %}
+            <span class="card">{{ bankCard }}</span>
+        {% endfor %}
+    {% else %}
+        <p>Inga kort tillgängliga.</p>
+    {% endif %}
+</div>
+
+<p>POÄNG: {{ bankpoints }}</p>
+
+<form method="post" action="{{ path('dealer_card') }}">
+    <p>
+        <input type="submit" name="dealerCard" value="BANKEN DRAR">
+    </p>
+</form>
+
+<p>DINA KORT:</p>
+
+
+<div>
+    {% if drawnCards is defined and drawnCards %}
+        {% for cardString in cardStrings %}
+            <span class="card">{{ cardString }}</span>
+        {% endfor %}
+    {% else %}
+        <p>No cards available.</p>
+    {% endif %}
+</div>
+
+<p>POÄNG: {{ points }}</p>
+
+
+
+<p>There are {{ cardsLeft }} cards left in the deck.</p>
+
+{{ include('flash.html.twig') }}
+
+<form method="post" action="{{ path('play_card') }}">
+    <p>
+        <input type="submit" name="playCard" value="Draw Card">
+    </p>
+</form>
+<form method="post" action="{{ path('play_card') }}">
+    <p>
+        <input type="submit" name="playCard" value="Stanna">
+    </p>
+</form>
+
+<form method="post" action="{{ path('reset_session') }}">
+    <button type="submit">Reset Game</button>
+</form>
+
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 {
     "description": "Teacher Material",
+    "name": "composer/semver",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

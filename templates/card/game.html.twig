@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}TWENTYONE{% endblock %}
+
+{% block body %}
+
+<h1>TWENTYONE [START] </h1>
+
+<p> Välkommen till spelet tjugoett! <p> 
+
+<p> Detta spel är den svenska motsvarigheten till Black Jack. Du ska
+med ett eller två kort försöka uppnå det sammanlagda värdet 21, eller komma
+så nära som möjligt utan att överskrida 21. <p> 
+
+<p> Ess är värt 1 <p>
+
+<a href="{{ path('gamestart') }}" class="btn btn-primary">Börja spelet här</a>
+
+
+{% endblock %}
