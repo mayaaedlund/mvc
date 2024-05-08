@@ -17,7 +17,7 @@ class CardHand
     public function addOrderedCards(): void
     {
         for ($i = 1; $i <= 52; $i++) {
-            $card = new CardGraphic($i); // Skapa kort med specifika värden
+            $card = new Card();
             $this->add($card);
         }
     }

@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CardGameController extends AbstractController
 {
-    private $cardHand;
+    /*private $cardHand;
 
     public function __construct(CardHand $cardHand)
     {
         $this->cardHand = $cardHand;
-    }
+    }*/
 
     #[Route("/card", name: "card")]
     public function home(): Response
@@ -165,7 +165,7 @@ class CardGameController extends AbstractController
         // Dra ett kort från kortleken till handen om handen är tom
         if ($hand->getNumberDices() === 0) {
             $drawnCard = array_pop($deck);
-            $hand->add(new CardGraphic($drawnCard));
+            $hand->add(new CardGraphic());
         }
 
         $drawnCards = $session->get('drawn_cards', []); // Hämta alla tidigare dragna kort

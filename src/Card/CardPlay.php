@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CardPlay extends AbstractController
 {
-    private $deck = [];
+    //private $deck = [];
     private $playerHand = [];
     private $dealerHand = [];
 
@@ -42,7 +42,7 @@ class CardPlay extends AbstractController
 
         $drawnCard = array_pop($deck);
 
-        $playerHand->add(new CardGraphic($drawnCard));
+        $playerHand->add(new CardGraphic());
 
         $pointsForDrawnCard = $cardPoints->getPoints($drawnCard);
 
@@ -73,7 +73,7 @@ class CardPlay extends AbstractController
 
         $drawnCard = array_pop($deck);
 
-        $dealerHand->add(new CardGraphic($drawnCard));
+        $dealerHand->add(new CardGraphic());
 
         $pointsForDrawnCard = $cardPoints->getPoints($drawnCard);
 
