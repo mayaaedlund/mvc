@@ -9,14 +9,21 @@
 <p> Välkommen till spelet tjugoett! <p> 
 
 <p> Detta spel är den svenska motsvarigheten till Black Jack. Du ska
-med ett eller två kort försöka uppnå det sammanlagda värdet 21, eller komma
+med ett eller flera kort försöka uppnå det sammanlagda värdet 21, eller komma
 så nära som möjligt utan att överskrida 21. <p> 
+
+<p> Du börjar med att dra kort, du ser dina poäng, och får då välja att stanna eller fortsätta dra kort.
+Om du överskrider 21 förlorar du och spelet avslutas. <p> 
+
+<p> När du väljer att stanna blir det dealerns tur. Samma regler gäller för dealern. När dealern valt att stanna
+utses en vinnare. <p> 
 
 <p> Ess är värt 1 <p>
 
-<a href="{{ path('gamestart') }}" class="btn btn-primary">Börja spelet här</a>
+<a href="{{ path('gamedoc') }}" class="btn btn-primary">Läs på mer om dokumentationen här</a>
 
-<a href="{{ path('gamedoc') }}" class="btn btn-primary">Läs på om dokumentationen här</a>
+<a href="{{ path('gamestart') }}" class="game-button">Börja spelet här</a>
+
 
 
 {% endblock %}

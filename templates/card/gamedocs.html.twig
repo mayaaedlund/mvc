@@ -41,5 +41,28 @@ Drar kort till vardera spelare och lägger till poäng för de korten. Jag förs
         <img src="{{ asset('img/klassgame.png') }}" alt="" class="image-size-big">
 </div>
 
+<p> Min klass CardPlay innehåller logiken för att spela BlackJack. Klassen ärver från
+AbstractController för att kunna användas i applikationen och den använder också SessionInterface
+för att kunna fungera. Syftet med klassen är att den ska kunna dra kort, lägga till poäng, jämföra
+poängen samt hantera dealerns handlingar under spelets gång. 
+Attributen den har är: <p>
+<ul>
+    <li> Deck: En array med korten i </li>
+    <li> playerhand: instans av CardHand som är spelarens hand </li>
+    <li> dealerHand: också en instans av CardHand som är dealerns hand </li>
+</ul>
+
+Metoder den har är: <p>
+<ul>
+    <li> __construct(): Instansierar spelarens hand och dealerns hand. </li>
+    <li> getPlayerHand(): Returnerar spelarens hand. </li>
+    <li> getDealerHand(): Returnerar dealerns hand. </li>
+    <li> drawCardForPlayer(): Drar ett kort för spelarens hand, beräknar poäng, uppdaterar och kollar om spelaren gått över 21 poäng - isåfall avslutas spelet.</li>
+    <li> drawCardForDealer(): Drar ett kort för dealern till dess hand, beräknar poängen och uppdaterar poäng.</li>
+    <li> evaluateWinner(): Kollar och jämför spelarens och dealerns poäng för att kunna utse vinnare.</li>
+    <li> playerStay(): Hanterar koden för när spelaren väljer att stanna. PlayerStopped sätts till true och det blir då dealerns tur. </li>
+</ul>
+
+
 
 {% endblock %}

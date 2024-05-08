@@ -179,6 +179,21 @@ footer {
     background-color: #555;
 }
 
+/* KNAPPAR */
+.game-button {
+    padding: 20px 80px;
+    background-color: #253746;
+    color: #d6e0e5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
 
 .container {
     display: flex;
