@@ -176,18 +176,18 @@ footer {
 }
 
 .link-button:hover {
-    background-color: #555; /* Bakgrundsfärg för knapparna vid hover */
+    background-color: #555;
 }
 
 
 .container {
-    display: flex; /* Använd flexbox */
-    justify-content: space-between; /* Fördela utrymmet mellan kolumnerna */
-    margin: 20px; /* Lägg till marginal runt containern */
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
 }
 
 .column {
-    width: 45%; /* Bredden på varje kolumn */
+    width: 45%;
 }
 
 /**
@@ -293,38 +293,42 @@ ul.cardarea li {
 
 /* Styla knapparna */
 form {
-    text-align: center; /* Centrera knapparna horisontellt */
+    text-align: center;
 }
 
 input[type="submit"], button {
-    padding: 10px 20px; /* Justera padding för att ge knapparna lite utrymme */
-    background-color: #19381a; /* Bakgrundsfärg */
-    color: white; /* Textfärg */
-    border: none; /* Ingen kantlinje */
+    padding: 10px 20px;
+    background-color: #19381a; 
+    color: white; 
+    border: none; 
     font-weight: bold;
-    border-radius: 5px; /* Runda hörn */
-    cursor: pointer; /* Visa pekaren som en hand när den är över knappen */
-    margin: 10px; /* Avstånd mellan knappar */
+    border-radius: 5px;
+    cursor: pointer; 
+    margin: 10px;
 }
 
 input[name="playerStay"], button[type="submit"] {
     background-color: #f44336; /* Bakgrundsfärg för "STANNA" knappen */
 }
 input[type="submit"]:hover, button:hover {
-    background-color: #45a049; /* Ändra bakgrundsfärgen när användaren hovrar över knappen */
+    background-color: #45a049;
 }
 
-/* Styla överskrifterna */
 h2 {
-    text-align: center; /* Centrera överskrifterna horisontellt */
+    text-align: center;
 }
 
 /* Styla kortcontainer */
 .card-container {
-    text-align: center; /* Centrera korten horisontellt */
-    margin-bottom: 20px; /* Avstånd mellan kortcontainer och knappar */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 button[type="submit"] {
-    background-color: black; /* Bakgrundsfärg för "STARTA OM" knappen */
+    background-color: black;
+}
+
+.image-size-big {
+    width: 400px;
+    height: auto;
 }

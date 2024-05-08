@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Game Docs{% endblock %}
+
+{% block body %}
+<h1>Game Docs</h1>
+
+<h2> Problemlösning </h2>
+
+<p> Jag började med att skissa i ett anteckningsblock ungefär hur jag ville
+att flödet i spelet skulle se ut. Den skissen såg ungefär ut såhär: <p>
+
+<div class="image-container">
+        <img src="{{ asset('img/BLACKJACK.png') }}" alt="" class="image-size-big">
+</div>
+
+<p> Efter det skapade jag kod över flödet och klasserna men började inte implementera
+några spelregler. Jag skapade alltså alla routes - men hade ingen logik för spelet. </p>
+
+<div class="image-container">
+        <img src="{{ asset('img/spelkod.png') }}" alt="" class="image-size-big">
+</div>
+
+<div class="image-container">
+        <img src="{{ asset('img/spelkod1.png') }}" alt="" class="image-size-big">
+</div>
+
+
+<p> Jag insåg att jag inte hade någon klass som kollade poängen för korten, så jag började med
+att skapa den. </p>
+
+<div class="image-container">
+        <img src="{{ asset('img/klassgame2.png') }}" alt="" class="image-size-big">
+</div>
+
+<p> Därefter insåg jag att jag skulle behöva en klass som innehåller spellogiken.
+Drar kort till vardera spelare och lägger till poäng för de korten. Jag försökte
+återanvända så mycket kod jag hade. </p>
+
+<div class="image-container">
+        <img src="{{ asset('img/klassgame.png') }}" alt="" class="image-size-big">
+</div>
+
+
+{% endblock %}
